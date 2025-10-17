@@ -40,27 +40,37 @@ document.getElementById('trackForm').addEventListener('submit', function (e) {
 
 });
 
-// Booking form functionality
-document.getElementById('bookingForm').addEventListener('submit', function (e) {
-  e.preventDefault();
+// Real booking form with success message (Formspree)
+const bookingForm = document.getElementById('bookingForm');
+const bookingResponse = document.getElementById('bookingResponse');
 
-  const name = document.getElementById('fullname').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const address = document.getElementById('address').value.trim();
-  const details = document.getElementById('packageDetails').value.trim();
-  const response = document.getElementById('bookingResponse');
+if (bookingForm) {
+  bookingForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-  if (!name || !email || !phone || !address || !details) {
-    response.textContent = '⚠ Please fill in all fields before submitting.';
-    response.style.color = 'red';
-    return;
-  }
+    bookingResponse.textContent = "⏳ Sending your booking request...";
+    bookingResponse.style.color = "#0072ff";
 
-  // Simulate success
-  response.textContent = ✅ Thank you, ${name}! Your pickup has been scheduled. We’ll contact you at ${phone}.;
-  response.style.color = 'green';
+    const formData = new FormData(bookingForm);
 
-  // Reset form
-  document.getElementById('bookingForm').reset();
-});
+    try {
+      const response = await fetch(bookingForm.action, {
+        method: "POST",
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        bookingResponse.textContent = "✅ Your booking was successfully sent! We'll contact you shortly.";
+        bookingResponse.style.color = "green";
+        bookingForm.reset();
+      } else {
+        bookingResponse.textContent = "⚠ Something went wrong. Please try again.";
+        bookingResponse.style.color = "red";
+      }
+    } catch (error) {
+      bookingResponse.textContent = "❌ Error sending booking. Check your internet and try again.";
+      bookingResponse.style.color = "red";
+    }
+  });
+}
