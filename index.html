@@ -1,115 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vodac Courier | Fast & Reliable Delivery</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vodac Courier Service</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <header class="navbar">
-    <div class="logo">🚚 VodacCourier</div>
+  <header>
+    <h1>🚚 Vodac Courier Service</h1>
     <nav>
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#track">Track</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+      <a href="index.html">Home</a>
+      <a href="track.html">Track Package</a>
     </nav>
   </header>
 
-  <section id="home" class="hero">
-    <div class="hero-content">
-      <h1>Fast, Reliable & Secure Deliveries</h1>
-      <p>Your trusted courier partner for local and international deliveries.</p>
-      <a href="#track" class="btn">Track a Package</a>
-    </div>
-  </section>
-
-  <section id="services" class="services">
-    <h2>Our Services</h2>
-    <div class="service-grid">
-      <div class="service-card">
-        <h3>Local Delivery</h3>
-        <p>Swift and safe delivery within your city — same-day options available.</p>
-      </div>
-      <div class="service-card">
-        <h3>Nationwide Shipping</h3>
-        <p>We connect cities efficiently across the nation with trusted drivers.</p>
-      </div>
-      <div class="service-card">
-        <h3>International Courier</h3>
-        <p>Global reach with transparent pricing and real-time tracking updates.</p>
-      </div>
-    </div>
-  </section>
-
- <section class="tracking">
-  <h2>Track Your Package</h2>
-  <form id="trackForm">
-    <input type="text" id="trackingID" placeholder="Enter your tracking number" required>
-    <button type="submit">Track Now</button>
-  </form>
-  <div id="trackingResult"></div>
-
-  <!-- Progress tracker -->
-  <div class="progress-container" id="progressContainer" style="display:none;">
-    <div class="progress-bar" id="progressBar"></div>
-    <ul class="progress-steps">
-      <li id="step1">📦 Picked Up</li>
-      <li id="step2">🚚 In Transit</li>
-      <li id="step3">🏙 Out for Delivery</li>
-      <li id="step4">✅ Delivered</li>
-    </ul>
-  </div>
-</section>
-
-  <section id="about" class="about">
-    <h2>About Vodac Courier</h2>
-    <p>At Vodac Courier, we combine speed, safety, and professionalism to deliver your parcels right on time.</p>
-  </section>
-
-  <section id="book" class="book">
-  <h2>Book a Pickup</h2>
-  <p>Schedule a pickup for your parcel and let us handle the rest.</p>
-
-  <form id="bookingForm" class="booking-form" action="https://formspree.io/f/mqaynwkp" method="POST">
-  <div class="form-group">
-    <input type="text" name="Full Name" placeholder="Full Name" required>
-    <input type="email" name="Email" placeholder="Email Address" required>
-  </div>
-
-  <div class="form-group">
-    <input type="text" name="Phone" placeholder="Phone Number" required>
-    <input type="text" name="Address" placeholder="Pickup Address" required>
-  </div>
-
-  <div class="form-group">
-    <textarea name="Package Details" placeholder="Describe your package (e.g., size, type, fragile items)" required></textarea>
-  </div>
-
-  <button type="submit" class="btn">Submit Booking</button>
-</form>
-
-  <div id="bookingResponse" class="booking-response"></div>
-</section>
-  
-  <section id="contact" class="contact">
-    <h2>Contact Us</h2>
-    <p>📧 Email: <a href="mailto:Petsavid@gmail.com">Petsavid@gmail.com</a></p>
-    <p>📍 Address: Austin, TX</p>
+  <section class="booking">
+    <h2>Book a Shipment</h2>
+    <form id="bookingForm">
+      <input type="text" id="senderName" placeholder="Sender Name" required>
+      <input type="text" id="receiverName" placeholder="Receiver Name" required>
+      <input type="text" id="pickupAddress" placeholder="Pickup Address" required>
+      <input type="text" id="deliveryAddress" placeholder="Delivery Address" required>
+      <input type="tel" id="phone" placeholder="Phone Number" required>
+      <button type="submit">Book Now</button>
+    </form>
+    <p id="bookingMessage"></p>
   </section>
 
   <footer>
-    <p>© 2015 Vodac Courier. All Rights Reserved.</p>
+    <p>© 2025 Vodac Courier. All Rights Reserved.</p>
   </footer>
 
   <script src="script.js"></script>
 </body>
-
 </html>
-
-
