@@ -37,4 +37,30 @@ document.getElementById('trackForm').addEventListener('submit', function (e) {
       result.style.color = 'green';
     }
   }, 2000);
+
+});
+
+// Booking form functionality
+document.getElementById('bookingForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const name = document.getElementById('fullname').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const address = document.getElementById('address').value.trim();
+  const details = document.getElementById('packageDetails').value.trim();
+  const response = document.getElementById('bookingResponse');
+
+  if (!name || !email || !phone || !address || !details) {
+    response.textContent = '⚠ Please fill in all fields before submitting.';
+    response.style.color = 'red';
+    return;
+  }
+
+  // Simulate success
+  response.textContent = ✅ Thank you, ${name}! Your pickup has been scheduled. We’ll contact you at ${phone}.;
+  response.style.color = 'green';
+
+  // Reset form
+  document.getElementById('bookingForm').reset();
 });
