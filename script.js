@@ -1,43 +1,48 @@
-document.getElementById('trackForm').addEventListener('submit', function (e) {
+document.getElementById('trackForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const id = document.getElementById('trackingID').value.trim();
   const result = document.getElementById('trackingResult');
-  const steps = document.getElementById('trackingSteps');
+  const progressContainer = document.getElementById('progressContainer');
+  const progressBar = document.getElementById('progressBar');
+  const steps = ['step1', 'step2', 'step3', 'step4'].map(id => document.getElementById(id));
 
-  steps.innerHTML = '';
-  result.textContent = '';
-
-  if (id === '') {
-    result.textContent = '⚠ Please enter a tracking number.';
-    result.style.color = 'red';
+  if (id === "") {
+    result.textContent = "⚠ Please enter a tracking number.";
+    result.style.color = "red";
+    progressContainer.style.display = "none";
     return;
   }
 
-  result.textContent = Tracking number ${id} found. Fetching delivery status...;
-  result.style.color = '#0072ff';
+  // Show tracking start message
+  result.textContent = 🔎 Tracking number ${id} found. Please wait...;
+  result.style.color = "#007bff";
+  progressContainer.style.display = "block";
 
-  const trackingProgress = [
-    'Package picked up from sender 📦',
-    'In transit between courier hubs 🚚',
-    'Out for delivery to recipient 🏠',
-    'Delivered successfully ✅'
+  // Reset progress
+  progressBar.style.width = "0%";
+  steps.forEach(step => step.classList.remove('active'));
+
+  // Animate progress
+  let progress = 0;
+  const stages = [25, 50, 75, 100];
+  const messages = [
+    "📦 Package Picked Up",
+    "🚚 In Transit",
+    "🏙 Out for Delivery",
+    "✅ Delivered Successfully!"
   ];
 
-  let step = 0;
+  let index = 0;
   const interval = setInterval(() => {
-    if (step < trackingProgress.length) {
-      const li = document.createElement('li');
-      li.textContent = trackingProgress[step];
-      li.className = 'tracking-step';
-      steps.appendChild(li);
-      step++;
-    } else {
-      clearInterval(interval);
-      result.textContent = ✅ Package ${id} delivered successfully!;
-      result.style.color = 'green';
-    }
-  }, 2000);
+    progress = stages[index];
+    progressBar.style.width = progress + "%";
+    steps[index].classList.add('active');
+    result.textContent = messages[index];
+    result.style.color = progress === 100 ? "green" : "#007bff";
+    index++;
 
+    if (index === stages.length) clearInterval(interval);
+  }, 1500);
 });
 
 // Real booking form with success message (Formspree)
@@ -74,3 +79,4 @@ if (bookingForm) {
     }
   });
 }
+
