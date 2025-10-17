@@ -47,18 +47,25 @@
     </div>
   </section>
 
-  <section id="track" class="track">
-    <h2>Track Your Package</h2>
-    <form id="trackForm">
-      <input type="text" id="trackingID" placeholder="Enter Tracking Number" required />
-      <button type="submit" class="btn">Track Now</button>
-    </form>
+ <section class="tracking">
+  <h2>Track Your Package</h2>
+  <form id="trackForm">
+    <input type="text" id="trackingID" placeholder="Enter your tracking number" required>
+    <button type="submit">Track Now</button>
+  </form>
+  <div id="trackingResult"></div>
 
-    <div id="trackingDisplay" class="tracking-display">
-      <p id="trackingResult" class="tracking-status"></p>
-      <ul id="trackingSteps" class="tracking-steps"></ul>
-    </div>
-  </section>
+  <!-- Progress tracker -->
+  <div class="progress-container" id="progressContainer" style="display:none;">
+    <div class="progress-bar" id="progressBar"></div>
+    <ul class="progress-steps">
+      <li id="step1">📦 Picked Up</li>
+      <li id="step2">🚚 In Transit</li>
+      <li id="step3">🏙 Out for Delivery</li>
+      <li id="step4">✅ Delivered</li>
+    </ul>
+  </div>
+</section>
 
   <section id="about" class="about">
     <h2>About Vodac Courier</h2>
@@ -104,4 +111,5 @@
 </body>
 
 </html>
+
 
