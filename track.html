@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Your Package - Vodac Courier</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>📦 Track Your Package</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="track.html">Track</a>
+    </nav>
+  </header>
+
+  <section class="tracking">
+    <form id="trackForm">
+      <input type="text" id="trackingID" placeholder="Enter Tracking ID" required>
+      <button type="submit">Track Now</button>
+    </form>
+    <p id="trackingResult"></p>
+
+    <div class="progress-container" id="progressContainer" style="display:none;">
+      <div class="progress-bar" id="progressBar"></div>
+      <ul class="progress-steps">
+        <li id="step1">📦 Picked Up</li>
+        <li id="step2">🚚 In Transit</li>
+        <li id="step3">🏙 Out for Delivery</li>
+        <li id="step4">✅ Delivered</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Vodac Courier. All Rights Reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
