@@ -69,23 +69,23 @@
   <h2>Book a Pickup</h2>
   <p>Schedule a pickup for your parcel and let us handle the rest.</p>
 
-  <form id="bookingForm" class="booking-form">
-    <div class="form-group">
-      <input type="text" id="fullname" placeholder="Full Name" required>
-      <input type="email" id="email" placeholder="Email Address" required>
-    </div>
+  <form id="bookingForm" class="booking-form" action="https://formspree.io/f/mqaynwkp" method="POST">
+  <div class="form-group">
+    <input type="text" name="Full Name" placeholder="Full Name" required>
+    <input type="email" name="Email" placeholder="Email Address" required>
+  </div>
 
-    <div class="form-group">
-      <input type="text" id="phone" placeholder="Phone Number" required>
-      <input type="text" id="address" placeholder="Pickup Address" required>
-    </div>
+  <div class="form-group">
+    <input type="text" name="Phone" placeholder="Phone Number" required>
+    <input type="text" name="Address" placeholder="Pickup Address" required>
+  </div>
 
-    <div class="form-group">
-      <textarea id="packageDetails" placeholder="Describe your package (e.g., size, type, fragile items)" required></textarea>
-    </div>
+  <div class="form-group">
+    <textarea name="Package Details" placeholder="Describe your package (e.g., size, type, fragile items)" required></textarea>
+  </div>
 
-    <button type="submit" class="btn">Submit Booking</button>
-  </form>
+  <button type="submit" class="btn">Submit Booking</button>
+</form>
 
   <div id="bookingResponse" class="booking-response"></div>
 </section>
@@ -104,3 +104,4 @@
 </body>
 
 </html>
+
