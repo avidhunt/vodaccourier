@@ -65,10 +65,34 @@
     <p>At Vodac Courier, we combine speed, safety, and professionalism to deliver your parcels right on time.</p>
   </section>
 
+  <section id="book" class="book">
+  <h2>Book a Pickup</h2>
+  <p>Schedule a pickup for your parcel and let us handle the rest.</p>
+
+  <form id="bookingForm" class="booking-form">
+    <div class="form-group">
+      <input type="text" id="fullname" placeholder="Full Name" required>
+      <input type="email" id="email" placeholder="Email Address" required>
+    </div>
+
+    <div class="form-group">
+      <input type="text" id="phone" placeholder="Phone Number" required>
+      <input type="text" id="address" placeholder="Pickup Address" required>
+    </div>
+
+    <div class="form-group">
+      <textarea id="packageDetails" placeholder="Describe your package (e.g., size, type, fragile items)" required></textarea>
+    </div>
+
+    <button type="submit" class="btn">Submit Booking</button>
+  </form>
+
+  <div id="bookingResponse" class="booking-response"></div>
+</section>
+  
   <section id="contact" class="contact">
     <h2>Contact Us</h2>
     <p>📧 Email: <a href="mailto:Petsavid@gmail.com">Petsavid@gmail.com</a></p>
-    <p>📞 Phone: +234 800 000 0000</p>
     <p>📍 Address: Austin, TX</p>
   </section>
 
@@ -78,4 +102,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>
