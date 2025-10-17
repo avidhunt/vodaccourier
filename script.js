@@ -1,82 +1,98 @@
-document.getElementById('trackForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const id = document.getElementById('trackingID').value.trim();
-  const result = document.getElementById('trackingResult');
-  const progressContainer = document.getElementById('progressContainer');
-  const progressBar = document.getElementById('progressBar');
-  const steps = ['step1', 'step2', 'step3', 'step4'].map(id => document.getElementById(id));
+// Generate random tracking IDs like VCX-483920
+function generateTrackingID() {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let id = "VCX-";
+  for (let i = 0; i < 6; i++) id += chars.charAt(Math.floor(Math.random() * chars.length));
+  return id;
+}
 
-  if (id === "") {
-    result.textContent = "⚠ Please enter a tracking number.";
-    result.style.color = "red";
-    progressContainer.style.display = "none";
-    return;
-  }
-
-  // Show tracking start message
-  result.textContent = 🔎 Tracking number ${id} found. Please wait...;
-  result.style.color = "#007bff";
-  progressContainer.style.display = "block";
-
-  // Reset progress
-  progressBar.style.width = "0%";
-  steps.forEach(step => step.classList.remove('active'));
-
-  // Animate progress
-  let progress = 0;
-  const stages = [25, 50, 75, 100];
-  const messages = [
-    "📦 Package Picked Up",
-    "🚚 In Transit",
-    "🏙 Out for Delivery",
-    "✅ Delivered Successfully!"
-  ];
-
-  let index = 0;
-  const interval = setInterval(() => {
-    progress = stages[index];
-    progressBar.style.width = progress + "%";
-    steps[index].classList.add('active');
-    result.textContent = messages[index];
-    result.style.color = progress === 100 ? "green" : "#007bff";
-    index++;
-
-    if (index === stages.length) clearInterval(interval);
-  }, 1500);
-});
-
-// Real booking form with success message (Formspree)
+// ================== BOOKING FORM ==================
 const bookingForm = document.getElementById('bookingForm');
-const bookingResponse = document.getElementById('bookingResponse');
-
 if (bookingForm) {
-  bookingForm.addEventListener('submit', async function (e) {
+  bookingForm.addEventListener('submit', e => {
     e.preventDefault();
 
-    bookingResponse.textContent = "⏳ Sending your booking request...";
-    bookingResponse.style.color = "#0072ff";
+    const sender = document.getElementById('senderName').value;
+    const receiver = document.getElementById('receiverName').value;
+    const pickup = document.getElementById('pickupAddress').value;
+    const delivery = document.getElementById('deliveryAddress').value;
+    const phone = document.getElementById('phone').value;
+    const message = document.getElementById('bookingMessage');
 
-    const formData = new FormData(bookingForm);
+    const trackingID = generateTrackingID();
 
-    try {
-      const response = await fetch(bookingForm.action, {
-        method: "POST",
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      });
+    message.style.color = "green";
+    message.innerHTML = `✅ Booking successful!<br>
+    Tracking ID: <strong>${trackingID}</strong><br>
+    <a href="track.html?track=${trackingID}">Click here to track your shipment</a>`;
 
-      if (response.ok) {
-        bookingResponse.textContent = "✅ Your booking was successfully sent! We'll contact you shortly.";
-        bookingResponse.style.color = "green";
-        bookingForm.reset();
-      } else {
-        bookingResponse.textContent = "⚠ Something went wrong. Please try again.";
-        bookingResponse.style.color = "red";
-      }
-    } catch (error) {
-      bookingResponse.textContent = "❌ Error sending booking. Check your internet and try again.";
-      bookingResponse.style.color = "red";
-    }
+    // Save booking locally for testing
+    localStorage.setItem(trackingID, JSON.stringify({
+      sender, receiver, pickup, delivery, phone, status: "Booked"
+    }));
+
+    bookingForm.reset();
   });
 }
 
+// ================== TRACKING FORM ==================
+const trackForm = document.getElementById('trackForm');
+if (trackForm) {
+  trackForm.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const id = document.getElementById('trackingID').value.trim();
+    const result = document.getElementById('trackingResult');
+    const progressContainer = document.getElementById('progressContainer');
+    const progressBar = document.getElementById('progressBar');
+    const steps = ['step1', 'step2', 'step3', 'step4'].map(id => document.getElementById(id));
+
+    if (!id) {
+      result.textContent = "⚠ Please enter a valid tracking ID.";
+      result.style.color = "red";
+      return;
+    }
+
+    const booking = localStorage.getItem(id);
+    if (!booking) {
+      result.textContent = "❌ Tracking ID not found.";
+      result.style.color = "red";
+      progressContainer.style.display = "none";
+      return;
+    }
+
+    result.textContent = 🔎 Tracking number ${id} found!;
+    result.style.color = "#007bff";
+    progressContainer.style.display = "block";
+
+    // Reset progress
+    progressBar.style.width = "0%";
+    steps.forEach(step => step.classList.remove('active'));
+
+    let index = 0;
+    const stages = [25, 50, 75, 100];
+    const messages = [
+      "📦 Package Picked Up",
+      "🚚 In Transit",
+      "🏙 Out for Delivery",
+      "✅ Delivered Successfully!"
+    ];
+
+    const interval = setInterval(() => {
+      progressBar.style.width = stages[index] + "%";
+      steps[index].classList.add('active');
+      result.textContent = messages[index];
+      result.style.color = stages[index] === 100 ? "green" : "#007bff";
+      index++;
+      if (index === stages.length) clearInterval(interval);
+    }, 1500);
+  });
+
+  // Auto-load tracking ID from URL if present
+  const params = new URLSearchParams(window.location.search);
+  const autoID = params.get("track");
+  if (autoID) {
+    document.getElementById('trackingID').value = autoID;
+    trackForm.dispatchEvent(new Event('submit'));
+  }
+}
